@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+	<h3>JMWebViewJavascriptBridge Demo</h3>
+    	<div id='buttons'></div>
+        <div id='log'></div>
+	<script>
+
+	window.onerror = function(err) {
+		log('window.onerror: ' + err)
+	}
+    
+    var uniqueId = 1
+    function log(message, data) {
+        var log = document.getElementById('log')
+        var el = document.createElement('div')
+        el.className = 'logLine'
+        if(typeof data == 'undefined')
+        el.innerHTML = uniqueId++ + '. ' + message;
+        else el.innerHTML = uniqueId++ + '. ' + message + ':<br/>' + JSON.stringify(data)
+        if (log.children.length) { log.insertBefore(el, log.children[0]) }
+        else { log.appendChild(el) }
+    }
+    
+    if (document.addEventListener){
+        document.addEventListener('TgclubReady', function(){
+                                  JMWebViewJavascriptBridge.registerObj(jsInterface);
+                                  /*
+                                  JMWebViewJavascriptBridge.registerFunction('func', function(data, responseCallback) {
+                                                                    log('ObjC called func data', data);
+                                                                    var responseData = { 'jsKey':'jsValue'};
+                                                                    log('JS data', responseData);
+                                                                    responseCallback(responseData);
+                                                                    });*/
+                                  },
+                                  false);
+    }
+    
+    var callbackButton = document.getElementById('buttons').appendChild(document.createElement('button'));
+    callbackButton.innerHTML = 'call objc function';
+    callbackButton.onclick = function(e) {
+        e.preventDefault()
+        log('call objc function "Tgclub.function1"')
+        Tgclub.function1({data:'test'},function(data){
+            log("objc return", data);
+        });
+    };
+    
+    var jsInterface = {};
+    jsInterface.func = function(data, responseCallback) {
+        log('ObjC called func data', data);
+        var responseData = { 'jsKey':'jsValue'};
+        log('JS data', responseData);
+        responseCallback(responseData);
+    };
+ 	</script>
+</body>
+</html>
