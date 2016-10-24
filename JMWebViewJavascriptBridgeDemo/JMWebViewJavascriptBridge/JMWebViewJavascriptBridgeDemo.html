@@ -39,14 +39,40 @@
                                   false);
     }
     
-    var callbackButton = document.getElementById('buttons').appendChild(document.createElement('button'));
-    callbackButton.innerHTML = 'call objc function';
-    callbackButton.onclick = function(e) {
+    var btn1 = document.getElementById('buttons').appendChild(document.createElement('button'));
+    btn1.innerHTML = 'call objc with data and callback';
+    btn1.onclick = function(e) {
         e.preventDefault()
         log('call objc function "Tgclub.function1"')
         Tgclub.function1({data:'test'},function(data){
             log("objc return", data);
         });
+    };
+    
+    var btn2 = document.getElementById('buttons').appendChild(document.createElement('button'));
+    btn2.innerHTML = 'call objc with data';
+    btn2.onclick = function(e) {
+        e.preventDefault()
+        log('call objc function "Tgclub.function2"')
+        Tgclub.function2({data:'test'});
+    };
+    
+    var btn3 = document.getElementById('buttons').appendChild(document.createElement('button'));
+    btn3.innerHTML = 'call objc with callback';
+    btn3.onclick = function(e) {
+        e.preventDefault()
+        log('call objc function "Tgclub.function3"')
+        Tgclub.function3(function(data){
+                         log("objc return", data);
+                         });
+    };
+    
+    var btn4 = document.getElementById('buttons').appendChild(document.createElement('button'));
+    btn4.innerHTML = 'call objc with nothing';
+    btn4.onclick = function(e) {
+        e.preventDefault()
+        log('call objc function "Tgclub.function4"')
+        Tgclub.function4();
     };
     
     var jsInterface = {};

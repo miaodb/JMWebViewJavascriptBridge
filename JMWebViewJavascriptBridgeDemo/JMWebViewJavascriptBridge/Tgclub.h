@@ -19,6 +19,4 @@
 
 @property (nonatomic, weak) id<JMJsInterfaceDelegate> delegate;
 
-- (void)function1:(NSArray *)args;
-
 @end
